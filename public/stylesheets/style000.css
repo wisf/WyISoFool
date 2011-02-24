@@ -1,0 +1,42 @@
+/*  
+Theme Name: iBlog
+
+Theme URI: http://www.pagelines.com/themes/iblogpro
+
+Description: iBlog is a professional yet free WordPress theme built on the PageLines CMS framework. It has thumbs, widget, options, localization and more! Designed and developed by <a href="http://www.pagelines.com">PageLines</a>.
+
+Version: 3.1.2
+
+Author: PageLines
+
+Author URI: http://www.pagelines.com
+
+Tags: theme-options, white, silver, light, two-columns, fixed-width, threaded-comments, translation-ready, sticky-post, custom-header
+
+Copyright PageLines 2010. iBlog is licensed under the terms of GPL. 
+
+*/ 
+
+/* Get Reset CSS */
+@import url('reset000.css');
+
+/* Get Core CSS */
+@import url('wp_core0.css');
+
+/* Get Theme CSS */
+@import url('theme000.css');
+
+/* Your custom styling can go in: custom.css ** Just don't replace this file on Updates */
+
+/* For WP.org theme repository checklist */
+.alignright {}
+.alignleft {}
+.alignnone {}
+.aligncenter {}
+.avatar {}
+.wp-caption {}
+.gallery {}
+.wp-smiley {}
+
+
+

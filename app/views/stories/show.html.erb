@@ -1,0 +1,9 @@
+<% content_for :content do %>
+
+  <%= render :partial => 'story', :collection => [ @story ] %>
+    <div id="pagination">
+      <h2 id="paragraph">
+    <%= link_to "назад", { :contoller => 'stories', :action => 'index', :page => session[:page]} %>
+      </h2>
+    </div>
+<% end %>

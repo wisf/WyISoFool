@@ -1,0 +1,17 @@
+<%= form_for :story do |f| %>
+  <div id="newform">
+    <div class="field">
+      <%= f.label :author, "Автор" %>
+      <%= f.text_field :author, :size => 25 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :content, "История" %>
+      <%= f.text_area :content, :cols => 20, :rows => 10, :style => 'border:3px solid #cccccc;' %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </div>
+<% end %>

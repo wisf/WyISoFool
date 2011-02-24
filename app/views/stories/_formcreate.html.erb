@@ -1,0 +1,7 @@
+<h2 id="paragraph">Раскажи свою историю</h2>
+<%= form_for :story do |f| %>
+    <%= f.label :author, "Ваше имя" %><br/>
+    <%= f.text_field :author, :size => 55 %>
+    <%= f.label :content, "История" %>
+    <%= f.text_area :content, :cols => 57 %>
+<% end %>

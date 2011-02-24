@@ -1,0 +1,55 @@
+<div class="postwrap fix">
+  <div class="post-36 post type-post hentry category-uncategorized" id="post-36">
+    <div class="copy fix">
+      <div class="post-header fix post-nothumb">
+        <div class="post-title-section fix">
+          <div class="post-title fix">
+            <div style="float: left">
+              <%= link_to "#" + story.id.to_s + ", добавлена " + distance_of_time_in_words_to_now(story.created_at) + " назад" , { :action => 'show', :id => story.id } %>
+            </div>
+            <div class="metabar" style="float:right;">
+              <% if story.author.blank?
+                   @author = 'Аноним'
+                 else
+                   @author = story.author
+                 end %>
+              <em>
+                  Автор: <%= @author %>
+              </em>
+            </div>
+            <div class="clear"></div>
+          </div>
+        </div>
+      </div>      
+    </div>
+    <hr/>
+    <div class="copy fix">
+      <div class="textcontent">
+        <p>
+          <%= story.content %>
+        </p>
+        <% @story_vote_id = "story" + story.id.to_s %>
+        <% @story = story %>
+        <%= render :partial => 'adminmenu' %>
+      </div>
+    </div>
+    <div class="hl"></div>
+    <div class="post-footer">
+      <div class="left" id="<%= @story_vote_id %>">
+        <% if session[@story_vote_id].blank? %>
+            <%= link_to "Ты дура(+)", { :action => 'rate_up', :id => story.id }, :remote => true %>
+        <% else %>
+            Рейтинг:
+        <% end %>
+          <span>
+            <%= story.rate.to_s %>
+          </span>
+        <% if session[@story_vote_id].blank? %>
+          <%= link_to "Лажа(-)", { :action => 'rate_down', :id => story.id }, :remote => true %>
+        <% end %>
+      </div>
+    </div>
+  </div><!--post -->
+</div>
+<div class="tags"></div>
+<div class="clear"></div>

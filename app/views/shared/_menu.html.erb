@@ -1,0 +1,16 @@
+<ul>
+  <li class="page_item">
+    <a href="#" onclick="openDialog3(this, 'content1');"> добавить</a>
+  </li>
+  <li class="page_item">
+    <%= link_to 'лучшее', { :controller => 'stories', :order => 'best' } %>
+  </li>
+  <li class="page_item">
+    <%= link_to 'о нас', 'about' %>
+  </li>
+  <% if !session[:user].blank? %>
+  <li class="page_item">
+      <%= render :partial => 'admin/signout'  %>
+    </li>
+  <% end %>
+</ul>
