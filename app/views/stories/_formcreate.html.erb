@@ -1,7 +1,32 @@
-<h2 id="paragraph">Раскажи свою историю</h2>
-<%= form_for :story do |f| %>
-    <%= f.label :author, "Ваше имя" %><br/>
-    <%= f.text_field :author, :size => 55 %>
-    <%= f.label :content, "История" %>
-    <%= f.text_area :content, :cols => 57 %>
+<%= stylesheet_link_tag :all %>
+<%= javascript_include_tag :all %>
+<table>
+<tr>
+<td width="10"></td>
+<td>
+<%= form_for :story, :url => { :controller => "stories"}  do |f| %>
+<table>
+  <tr><td align="center"><h2 id="paragraph">Раскажи свою историю</h2></td></tr>
+  <tr><td align="center"><%= f.label :author, "Ваше имя" %></td></tr>
+  <tr><td align="center"><%= f.text_field :author, :size => 60 %></td></tr>
+  <tr><td align="center"><%= f.label :content, "История" %></td></tr>
+  <tr><td align="center"><%= f.text_area :content, :size => "62x19" %></td></tr>
+  <tr><td>
+    <div style="margin-top: 10px;">
+      <table width="100%">
+        <tr>
+          <td align="center">
+            <input type="button" value="Добавить" onclick="document.forms[0].submit();" class="button"/>
+          </td>
+          <td align="center">
+            <input type="button" value="Закрыть" onclick="window.top.hidePopWin();" class="button"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </td></tr>
+</table>
 <% end %>
+</td>
+</tr>
+</table>

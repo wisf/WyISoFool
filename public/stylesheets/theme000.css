@@ -143,7 +143,7 @@ a, #blogtitle a:hover, .postdata a:hover,h2.posttitle a:hover, .tags a:hover, .c
 	#blogdescription { 
 		float: left;
 		margin-top: 19px; 	/* description distance from top of screen */
-		margin-left: 10px;
+		margin-left: 90px;
 	}
 	.nav-icon {float: right;margin:13px 0 0 8px;}
 
@@ -498,12 +498,19 @@ margin-right:23px;
 .post-footer {
 	background: url(box-bgr2.gif) #eee repeat-x top;
 	height: 42px;
-        text-align: center;
+        position: relative;
 }
 .post-footer a{color: #444;}
 .post-footer .left {
 	line-height: 42px;
 }
+.left {
+    left: 235px;
+    position: absolute;
+    width: 170px;
+    text-align: center;
+}
+
 .post-footer .left span {
 	background: url(comment_.png) no-repeat center left;
 	font-weight: bold;
@@ -515,6 +522,19 @@ margin-right:23px;
 	display: inline-block;
 	line-height: 32px;
 }
+
+.post-footer .commentscount span {
+	background: url(comment_.png) no-repeat center left;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	padding: 4px 0 8px 0;
+	width: 33px;
+	margin-right: 6px;
+	display: inline-block;
+	line-height: 32px;
+}
+
 .post-footer .right {
 	padding: 9px 0 0;
 }
@@ -889,9 +909,11 @@ margin-right:23px;
 		float: left;
 		display:inline;
 		padding: 0 20px;
+        text-align: center;
 	}
 	.fcol_pad{
-		padding: 25px 5px 25px 22px	;
+		padding-top: 25px;
+		padding-bottom: 25px;
 	}
 
 #footer_topline{padding: 10px; border-bottom: 1px solid #ddd;}
@@ -1015,11 +1037,21 @@ margin-right:23px;
 }
 
 #story_author{
-    width: 300;
+    width: 400;
+}
+
+#comment_author{
+    width: 400;
 }
 
 #story_content{
-    height: 50;
+    width: 400;
+    height: 300;
+}
+
+#comment_content{
+    width: 400;
+    height: 300;
 }
 
 #pagination
@@ -1031,7 +1063,7 @@ margin-right:23px;
     color: #AAAAAA;
 }
 
-#pagination a{
+#pagination a, #more a{
     color: #08C;
 }
 
@@ -1050,4 +1082,33 @@ margin-right:23px;
 
 .adminmenu{
     text-align: center;
+}
+
+#more {
+    float: right;
+    margin-right: 12px;
+    margin-top: 12px;
+    position: inherit;
+}
+
+#vklike {
+    float: left;
+    margin-top: 10px;
+	margin-left: 10px;
+    position: inherit;
+}
+
+#share {
+    float: right;
+    margin-top: 7px;
+    position: inherit;
+}
+
+.commentscount {
+    float: left;
+    margin-left: 12px;
+    position: inherit;
+}
+#commentbodyerror{
+        color: red;
 }

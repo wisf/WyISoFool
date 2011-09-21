@@ -1,0 +1,9 @@
+<%= form_for :comment, @comment, :url => {:controller => "stories", :action => "add_comment", :id => @story.id}, :remote => true do |f| %>
+<table width="100%">
+  <tr><td align="center"><%= f.label :author, "Ваше имя(необязательно)" %></td></tr>
+  <tr><td align="center"><%= f.text_field :author, :style => "width: 300px;" %></td></tr>
+  <tr><td align="center"><div id="commentbody"><%= f.label :body, "Комментарий" %></div></td></tr>
+  <tr><td align="center"><%= f.text_area :body, :style => "width: 300px; height: 100px;" %></td></tr>
+  <tr><td align="center"><%= submit_tag "Отправить" %></td></tr>    
+</table>
+<% end %>

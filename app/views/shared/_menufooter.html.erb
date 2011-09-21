@@ -1,16 +1,12 @@
 <ul id="topnav">
   <li>
-    <div id="content1" style="display:none">
-      <%= render :partial => 'stories/formcreate' %>
-    </div>
-
-    <a href="#" onclick="openDialog3(this, 'content1');"> добавить</a>
+    <%= link_to 'добавить', { :controller => 'story', :action => 'create' }, :class => "submodal-423-453" %>
   </li>
   <li>
     <%= link_to 'лучшее', { :controller => 'stories', :order => 'best' } %>
   </li>
   <li>
-    <%= link_to 'о нас', 'about' %>
+    <%= link_to 'о нас', { :controller => 'about' } %>
   </li>
   <% if !session[:user].blank? %>
     <li>

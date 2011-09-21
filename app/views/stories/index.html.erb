@@ -1,6 +1,6 @@
 <% content_for :content do %>
     <%= render :partial => 'story', :collection => @stories %>
-      <h1 id="pagination">
-        <%= will_paginate @stories, :previous_label => "← сюда", :next_label => "туда →" %>
-      </h1>
+    <h1 id="pagination">
+      <%= will_paginate @stories, :previous_label => "← сюда", :next_label => "туда →", :inner_window => 1, :outer_window => 2 %>
+    </h1>
 <% end %>

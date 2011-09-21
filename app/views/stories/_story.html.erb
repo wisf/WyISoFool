@@ -8,13 +8,8 @@
               <%= link_to "#" + story.id.to_s + ", добавлена " + distance_of_time_in_words_to_now(story.created_at) + " назад" , { :action => 'show', :id => story.id } %>
             </div>
             <div class="metabar" style="float:right;">
-              <% if story.author.blank?
-                   @author = 'Аноним'
-                 else
-                   @author = story.author
-                 end %>
               <em>
-                  Автор: <%= @author %>
+                  Автор: <%= story.author %>
               </em>
             </div>
             <div class="clear"></div>
@@ -26,7 +21,11 @@
     <div class="copy fix">
       <div class="textcontent">
         <p>
-          <%= story.content %>
+            <% if action_name.eql?("show") %>
+              <%= story.content %>
+            <% else %>
+              <%= truncate(story.content, :length => 1024) %>
+            <% end %>
         </p>
         <% @story_vote_id = "story" + story.id.to_s %>
         <% @story = story %>
@@ -48,6 +47,26 @@
           <%= link_to "Лажа(-)", { :action => 'rate_down', :id => story.id }, :remote => true %>
         <% end %>
       </div>
+      <% if !action_name.eql?("show") %>
+        <div class="commentscount">
+			<span>
+			  <%= story.comments.count %>
+			</span>
+			комментариев
+        </div>
+        <div id="more"><%= link_to "Далее", { :action => 'show', :id => story.id } %></div>
+      <% else %>
+        <div id="vklike">
+			<div id="vk_like"></div>
+			<script type="text/javascript">
+				VK.Widgets.Like("vk_like", {type: "button"});
+			</script>
+        </div>
+	    <div id="share">
+		  <div class="yashare-auto-init" data-yashareType="button" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,lj"></div> 
+		</div>
+	  <% end %>
+      <div class="clear"></div>
     </div>
   </div><!--post -->
 </div>

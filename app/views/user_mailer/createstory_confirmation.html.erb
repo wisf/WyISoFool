@@ -1,0 +1,7 @@
+﻿<p>Эй <%= @user.username %>, одобри новую историю, которая была добавлена <%= @story.created_at %>!</p>
+
+<p><b><%= @story.author %></b> написал:<p>
+
+<p><i><%= @story.content %></i></p>
+
+<p><%= link_to "К истории", "http://pochemu-ya-takaya-dura.ru/stories/" + @story.id.to_s %></p>

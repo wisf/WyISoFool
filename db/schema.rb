@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110220184600) do
+ActiveRecord::Schema.define(:version => 20110425153053) do
+
+  create_table "comments", :force => true do |t|
+    t.integer  "story_id"
+    t.string   "author"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "stories", :force => true do |t|
     t.text     "content"
@@ -27,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20110220184600) do
     t.string   "password_hash"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "mail"
   end
 
 end

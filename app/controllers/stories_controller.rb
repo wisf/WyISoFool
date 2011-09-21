@@ -23,7 +23,7 @@ class StoriesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.xml  { render :xml => @stories }
+      format.xml  { render :layout => false }
     end
   end
 
@@ -56,12 +56,22 @@ class StoriesController < ApplicationController
     end
   end
 
+  def getPrev id
+	i = id.to_i
+	loop do
+		i = i - 1
+		break if (Story.where(["id = ?", i.to_s]).size > 0)
+	end
+	i.to_s
+  end
+  
   # GET /stories/1
   # GET /stories/1.xml
   def show
     @story = Story.find(params[:id])
-
-    respond_to do |format|
+	@next = (@story.id.eql?(Story.last.id)) ? Story.first.id : Story.where(["id > ?", params[:id]]).limit(1)[0].id
+	@prev = (@story.id.eql?(Story.first.id)) ? Story.last.id : getPrev(@story.id)
+	respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @story }
     end
@@ -93,12 +103,24 @@ class StoriesController < ApplicationController
     @story = Story.new(params[:story])
     @story.rate = 0
 
+    if @story.author.blank?
+      @story.author = "Аноним"
+    end
+
     respond_to do |format|
       if @story.save
-        format.html { redirect_to "", :notice => 'Ваша история добавлена и появиться на сайте после одобрения модератором' }
+		Thread.new do
+			User.all.each do |user|
+				UserMailer.createstory_confirmation(@story, user).deliver
+			end
+		end
+        #format.html { redirect_to :controller => 'stories', :notice => 'Ваша история добавлена и появиться на сайте после одобрения модератором' }
+		storyPath = "http://pochemu-ya-takaya-dura.ru/stories/" + @story.id.to_s
+        format.html { render :text => "<html><head><link href='/stylesheets/theme000.css' media='screen' rel='stylesheet' type='text/css'/><script>window.setTimeout('window.top.hidePopWin()', 10000);</script></head><body><p id='notice'>Ваша история добавлена и появиться на сайте после одобрения модератором</p><div style='text-align: center;'>" + params[:story][:content] + "</div><div style='width: 300; margin: 0px auto;'><input type='button' value='Скрыть (Автоскрытие в течении 10 секунд)' onclick='window.top.hidePopWin();' class='button'/></div><p style='text-align: center;'><a href='' onclick='window.top.hidePopWin();window.open(\"" + storyPath +"\");'>Перейти на страницу истории</a><p></body></html>" }
         format.xml  { render :xml => @story, :status => :created, :location => @story }
       else
-        format.html { redirect_to :controller => 'stories', :notice => "Вы не рассказали свою историю!" }
+        #format.html { redirect_to :controller => 'stories', :notice => "Вы не рассказали свою историю!" }
+        format.html { render :text => "<html><head><link href='/stylesheets/theme000.css' media='screen' rel='stylesheet' type='text/css'/><script>window.setTimeout('window.top.hidePopWin();', 10000);</script></head><body><div style='height: 150px;'></div><p id='notice'>Вы не рассказали свою историю!</p><div style='width: 300; margin: 0px auto;'><input type='button' value='Скрыть (Автоскрытие в течении 10 секунд)' onclick='window.top.hidePopWin();' class='button'/></div></body></html>" }
         format.xml  { render :xml => @story.errors, :status => :unprocessable_entity }
       end
     end
@@ -172,5 +194,42 @@ class StoriesController < ApplicationController
         format.xml  { head :ok }
       end
     end
+  end
+
+  def add_comment
+		@comment = Comment.new(params[:comment])
+    if @comment.author.blank?
+      @comment.author = "Аноним"
+    end
+		@story = Story.find(params[:id])
+		@comment.story = @story
+		if (@comment.save) and ((session["lastcommenttime"].blank?) or (Time.now - session["lastcommenttime"] > 60))
+			session["lastcommenttime"] = Time.now
+			respond_to do |wants|
+			wants.js do
+				render :update do |page|
+					page.insert_html :top, "comments", :partial => 'comments/show', :collection => [@comment]
+					page.replace_html "commentbody", "Комментарий"
+					page.replace_html "commentnotice", "<p id='notice'>Ваш комментарий был успешно добавлен!</p>"
+					page['comment_body'].clear
+					page['comment_author'].clear
+				end
+			end
+		end
+		else
+      respond_to do |wants|
+        wants.js do
+          render :update do |page|
+            page.replace_html "commentnotice", ""
+            page.replace_html "commentbody", "Комментарий"
+            if (session["lastcommenttime"].blank?) or (Time.now - session["lastcommenttime"] > 60)
+              page.replace_html "commentbody", "<p id='commentbodyerror'>Комментарий (напиши что-нибудь!)</p>"
+            else
+              page.replace_html "commentnotice", "<p id='notice' style='color: red;'>Не сри в комментах!(Писать можно только раз в минуту)</p>"
+            end
+          end
+        end
+      end
+		end
   end
 end

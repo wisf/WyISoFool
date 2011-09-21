@@ -1,97 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name='yandex-verification' content='485b9e3150fbccda' />
+  <meta name="keywords" content="дура, я дура, почему я дура, почему я такая дура" />
+  <link rel="shortcut icon" href="http://pochemu-ya-takaya-dura.ru/favicon.ico" type="image/x-icon" />
   <title>Почему я такая дура?</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :all %>
-
-  <style type="text/css">
-    .popup_effect1 {
-      background: #909090;
-      opacity: 0.2;
-    }
-  </style>
   
   <script type="text/javascript">
-    function getArgs()
-    {
-	var
-		args=new Object(),
-		query=location.search.substring(1),
-		pairs=query.split("&"),
-		pos,
-		argname,
-		value;
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-19881721-2']);
+	_gaq.push(['_trackPageview']);
 
-	for(var i=0; i<pairs.length; ++i)
-	{
-		pos=pairs[i].indexOf("=");
-		if(pos==-1)
-			continue;
-		argname=pairs[i].substring(0,pos);
-		value=pairs[i].substring(pos+1);
-		args[argname.toLowerCase()]=unescape(value);
-		//args[argname]=decodeURIComponent(value);
-	}
-
-	return(args);
-    }
-
-    function hidenotice2()
-    {
-      var notice = document.getElementById('notice');
-      notice.hide();
-      var args = getArgs();
-      if (args['notice'] != undefined)
-      {
-          notice.show();
-          notice.innerHTML = args['notice'];
-      }
-    }
-
-    function hidenotice()
-    {
-      var notice = $('notice');
-      if (notice.innerHTML.length == 0)
-      {
-        notice.hide();
-      }
-      else
-      {
-        notice.show();
-      }
-    }
-
-    function newstorysend()
-    {
-      Windows.focusedWindow.close();
-      document.forms[0].submit();
-    }
-
-    function openDialog3(html, id)
-    {
-      //var effect = new PopupEffect(html, {className: "popup_effect1"});
-      $('story_author').value = '';
-      $('story_content').innerHTML = '';
-      Dialog.confirm($(id).innerHTML,{ buttonClass: "button", onOk: newstorysend, className:"alphacube", width: 420/*, showEffect:effect.show.bind(effect), hideEffect:effect.hide.bind(effect)*/})
-    }
+	(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
   </script>
 
-  <script type="tetext/javascript">
-  </script>
+  <script type="text/javascript" src="http://pochemu-ya-takaya-dura.ru/prototype.js"></script> 
 
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :all %>
   <%= csrf_meta_tag %>
+  <%= yield :head %>
 </head>
 
-<body onload="hidenotice()" class="home blog">
+<body class="home blog">
 <div id="page" class="fix">
-  <div id="wrapper" class="fix" >
+  <div id="wrapper" class="fix">
     <div id="header" class="fix">
-      <h1 id="blogtitle"><a href="http://localhost:3000/"><span class="sheen"></span>Почему я такая дура?</a></h1>
-      <div id="blogdescription">На самом деле не такая уж ты и дура</div>				<!-- iphone icons -->
+      <h1 id="blogtitle"><a href="http://pochemu-ya-takaya-dura.ru/"><span class="sheen"></span>Почему я такая <img src="http://pochemu-ya-takaya-dura.ru/logo.png"/ alt="дура" style="margin-bottom:-6px;">?</a></h1>
+      <div id="blogdescription">База тупстВ</div>				<!-- iphone icons -->
       <div class="icons">
 	<div class="nav-icon">
-          <a href='http://localhost:3000/rss'><img class="pngbg" src="http://localhost:3000/stylesheets/rss00000.png" alt="icon"/></a>
+          <a href='http://pochemu-ya-takaya-dura.ru/stories.xml'><img class="pngbg" src="http://pochemu-ya-takaya-dura.ru/stylesheets/rss00000.png" alt="rss icon"/></a>
         </div>
       </div>
 <!-- /end iphone icons -->
@@ -99,7 +42,7 @@
     <div id="nav" class="fix">
       <ul class="fix homebutton">
         <li class="page_item navfirst">
-          <a class="home" href="http://localhost:3000" title="Home" style="background-image: url('/stylesheets/home-icon-trans.png');">Домой</a>
+          <a class="home" href="http://pochemu-ya-takaya-dura.ru" title="Home" style="background-image: url('/stylesheets/home-icon-trans.png');">Домой</a>
         </li>
       </ul>
       <div class="mnav dropdown fix">
@@ -112,7 +55,9 @@
     <div id="container" class="fix ">
       <div id="maincontent">
         <div id="content">
+	  <% if !params[:notice].blank? %>
           <p id="notice"><%= params[:notice] %></p>
+	  <% end %>
           <%= yield :content %>
         </div> <!-- end content -->
     </div>
@@ -126,54 +71,67 @@
             </div>
           </div>
           <div class="fcol">
+            <div class="fcol_pad">				
+            </div>
+          </div>
+          <div class="fcol" style="width: 128px;">
             <div class="fcol_pad">
-              <h3>Страницы</h3>
+              <h3>Навигация</h3>
                 <div class="footer_nav">
                   <%= render :partial => 'shared/menufooter' %>
                 </div>
             </div>
           </div>
-          <div class="fcol">
+          <div class="fcol" style="width: 200px;">
             <div class="fcol_pad">
-              <h3>Держитесь за нас</h3>
+              <div class="welcomemessage">
+                <a href="http://pochemu-ya-takaya-dura.ru">Почему-Я-Такая-Дура.РУ</a> <br/>&copy; 2011<br/>
+                <a href="mailto:admin@pochemu-ya-takaya-dura.ru">admin@pochemu-ya-takaya-dura.ru</a>
+                <br/>
+                <b><%= link_to 'Рекламодателям', { :controller => 'about', :action => 'advert' } %></b>
+              </div>
+            </div>
+          </div>
+          <div class="fcol" style="width: 128px;">
+            <div class="fcol_pad">
               <div class="footer_nav">
                 <ul>
-                  <li class="page_item">
-                    <a href="http://vkontakte.ru">ВКонтакте</a>
-                  </li>
-                  <li class="page_item">
-                    <a href="http://vkontakte.ru">Facebook</a>
-                  </li>
-                  <li class="page_item">
-                    <a href="http://vkontakte.ru">Twitter</a>
-                  </li>
-                  <li class="page_item">
-                    <a href="mailto:SmitBLR@gmail.com">SmitBLR@gmail.com</a>
-                  </li>
+				  <li class="page_item">
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='http://www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t17.2;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число просмотров за 24"+
+" часа, посетителей за 24 часа и за сегодня' "+
+"border='0' width='88' height='31'><\/a>")
+//--></script><!--/LiveInternet-->
+				  </li>
+                  <li class="page_item">		  
+<!-- begin of Top100 code -->
+
+<script id="top100Counter" type="text/javascript" src="http://counter.rambler.ru/top100.jcn?2485099"></script>
+<noscript>
+<a href="http://top100.rambler.ru/navi/2485099/">
+<img src="http://counter.rambler.ru/top100.cnt?2485099" alt="Rambler's Top100" border="0" />
+</a>
+</noscript>
+<!-- end of Top100 code -->
+				  </li>
                 </ul>
               </div>
             </div>
-          </div>
-          <div class="fcol">
-            <div class="fcol_pad">
-              <h3>Копирайты</h3>
-              <div class="welcomemessage">
-                <a href="http://localhost:3000">Почему-Я-Такая-Дура</a> <br/>&copy Все права зашишены!
-              </div>
-            </div>
-          </div>
-          <div class="fcol">
-            <div class="fcol_pad">
-              <span class="terms">
-                &copy; 2011 FunTech
-              </span>
-            </div>
-          </div>
-        </div>
+          </div>        </div>
         <div class="clear"></div>
       </div>
     </div>
   </div>
+  <!-- catalogs -->
+  <div style="text-align: center;"> 
+  </div>  
+  
   <div class="clear"></div>
     <hr class="hidden" />
   </div><!--/wrapper -->

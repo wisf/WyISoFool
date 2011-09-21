@@ -1,4 +1,14 @@
 WhyISoFool::Application.routes.draw do |map|
+  get "rss/index"
+
+  resources :comments
+
+  get "story/create"
+
+  get "about/index"
+
+  get "about/advert"
+
   get "admin/signin"
 
   get "admin/signout"
@@ -62,5 +72,5 @@ WhyISoFool::Application.routes.draw do |map|
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
     map.root :controller => "stories"
-    map.connect ':controller/:action/:id'
+    map.connect ':controller/:action/:id'    
 end

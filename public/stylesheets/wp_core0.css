@@ -270,4 +270,4 @@ sub {font-size:.7em;vertical-align: bottom;}
 	.fix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 	.fix{display:inline-block;} 
 	* html .fix{height:1%;}
-	.fix{display:block;}
+	.fix{display: block;}
