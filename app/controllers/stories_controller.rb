@@ -32,12 +32,9 @@ class StoriesController < ApplicationController
     @story.rate = @story.rate + 1
     @story.save
     session["story" + params[:id]] = true
-    respond_to do |wants|
-      wants.js do
-        render :update do |page|
-          page.replace_html "story" + params[:id], '<div class="ajaxanswer">Ваш голос принят</div>'
-        end
-      end
+    respond_to do |format|
+      format.js { render "rate_change" }
+      format.html { redirect_to get_url }
     end
   end
 
