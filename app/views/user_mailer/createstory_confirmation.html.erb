@@ -4,4 +4,4 @@
 
 <p><i><%= @story.content %></i></p>
 
-<p><%= link_to "К истории", "http://pochemu-ya-takaya-dura.ru/stories/" + @story.id.to_s %></p>
+<p><%= link_to "К истории", root_url + "stories/" + @story.id.to_s %></p>

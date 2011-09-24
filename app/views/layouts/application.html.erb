@@ -3,7 +3,7 @@
 <head>
   <meta name='yandex-verification' content='485b9e3150fbccda' />
   <meta name="keywords" content="дура, я дура, почему я дура, почему я такая дура" />
-  <link rel="shortcut icon" href="http://pochemu-ya-takaya-dura.ru/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="<%= root_url %>" type="image/x-icon" />
   <title>Почему я такая дура?</title>
   
   <script type="text/javascript">
@@ -18,8 +18,6 @@
 	})();
   </script>
 
-  <script type="text/javascript" src="http://pochemu-ya-takaya-dura.ru/prototype.js"></script> 
-
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :all %>
   <%= csrf_meta_tag %>
@@ -30,11 +28,11 @@
 <div id="page" class="fix">
   <div id="wrapper" class="fix">
     <div id="header" class="fix">
-      <h1 id="blogtitle"><a href="http://pochemu-ya-takaya-dura.ru/"><span class="sheen"></span>Почему я такая <img src="http://pochemu-ya-takaya-dura.ru/logo.png"/ alt="дура" style="margin-bottom:-6px;">?</a></h1>
+      <h1 id="blogtitle"><a href="<%= root_url %>"><span class="sheen"></span>Почему я такая <img src="<%= root_url %>logo.png"/ alt="дура" style="margin-bottom:-6px;">?</a></h1>
       <div id="blogdescription">База тупстВ</div>				<!-- iphone icons -->
       <div class="icons">
 	<div class="nav-icon">
-          <a href='http://pochemu-ya-takaya-dura.ru/stories.xml'><img class="pngbg" src="http://pochemu-ya-takaya-dura.ru/stylesheets/rss00000.png" alt="rss icon"/></a>
+          <a href='<%= root_url %>stories.xml'><img class="pngbg" src="<%= root_url %>stylesheets/rss00000.png" alt="rss icon"/></a>
         </div>
       </div>
 <!-- /end iphone icons -->
@@ -42,7 +40,7 @@
     <div id="nav" class="fix">
       <ul class="fix homebutton">
         <li class="page_item navfirst">
-          <a class="home" href="http://pochemu-ya-takaya-dura.ru" title="Home" style="background-image: url('/stylesheets/home-icon-trans.png');">Домой</a>
+          <a class="home" href="<%= root_url %>" title="Home" style="background-image: url('/stylesheets/home-icon-trans.png');">Домой</a>
         </li>
       </ul>
       <div class="mnav dropdown fix">
@@ -85,7 +83,7 @@
           <div class="fcol" style="width: 200px;">
             <div class="fcol_pad">
               <div class="welcomemessage">
-                <a href="http://pochemu-ya-takaya-dura.ru">Почему-Я-Такая-Дура.РУ</a> <br/>&copy; 2011<br/>
+                <a href="<%= root_url %>">Почему-Я-Такая-Дура.РУ</a> <br/>&copy; 2011<br/>
                 <a href="mailto:admin@pochemu-ya-takaya-dura.ru">admin@pochemu-ya-takaya-dura.ru</a>
                 <br/>
                 <b><%= link_to 'Рекламодателям', { :controller => 'about', :action => 'advert' } %></b>

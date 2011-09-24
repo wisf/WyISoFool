@@ -1,0 +1,17 @@
+<% if @saved %>
+    <% session["lastcommenttime"] = Time.now %>
+    comment_notify("<p id='notice'>Ваш комментарий был успешно добавлен!</p>");
+    $("#commentbody").val("Комментарий");
+    $("#comments").prepend("<%= escape_javascript(render :partial => "comments/show", :collection => [@comment]) %>");
+    var comment_div = $("#<%= dom_id @comment %>");
+    comment_div.hide().slideToggle("slow");
+    $("#comment_body").val("");
+    $("#comment_author").val("");
+<% else %>
+    $("#commentbody").val("Комментарий");
+    <% if (session["lastcommenttime"].blank?) or (Time.now - session["lastcommenttime"] > 10) %>
+        $("#comment_body").val("<p id='commentbodyerror'>Комментарий (напиши что-нибудь!)</p>");
+    <% else %>
+        comment_notify("<p id='notice' style='color: red;'>Не сри в комментах!(Писать можно только раз в минуту)</p>");
+    <% end %>
+<% end %>

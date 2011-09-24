@@ -1,15 +1,15 @@
-<div class="hentry">
+<%= div_for show, :class => :hentry do %>
   <div>
     <div style="float: left">
       <%= h(show.author) %> <%= distance_of_time_in_words_to_now(show.created_at) %> назад написал:
     </div>
     <% if !session[:user].blank? %>
       <div class="adminmenu" style="float: right">
-        <%= link_to 'Удалить комментарий', "http://pochemu-ya-takaya-dura.ru/comments/destroy/" + show.id.to_s + "?storyid=" + @story.id.to_s %>
+        <%= link_to 'Удалить комментарий', root_url + "comments/destroy/" + show.id.to_s + "?storyid=" + @story.id.to_s %>
       </div>
     <% end %>
   </div>
   <blockquote>
     <%= show.body %>
   </blockquote>
-</div>
+<% end %>
