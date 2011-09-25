@@ -95,6 +95,7 @@ a, #blogtitle a:hover, .postdata a:hover,h2.posttitle a:hover, .tags a:hover, .c
 	#maincontent {
 		width: 640px; /* width of left column */                
 		float: left;
+        position: relative;
 	}
 	
 	#sidebar{ 
