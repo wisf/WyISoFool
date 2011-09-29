@@ -24,7 +24,7 @@
   <%= yield :head %>
 </head>
 
-<body class="home blog">
+<body class="home blog" onload="teasetnet_init();">
 <div id="page" class="fix">
   <div id="wrapper" class="fix">
     <div id="header" class="fix">
@@ -53,6 +53,7 @@
     <div id="container" class="fix ">
       <div id="maincontent">
         <div id="content">
+          <%= render :partial => "advert/teasernet" %>
 	  <% if !params[:notice].blank? %>
           <p id="notice"><%= params[:notice] %></p>
 	  <% end %>
@@ -60,19 +61,11 @@
         </div> <!-- end content -->
     </div>
   </div>
+  <%= render :partial => "advert/google_adsence" %>
   <div  id="footer">
     <div class="effect">
       <div class="content">
-        <div id="fcolumns_container" class="fix">
-          <div class="fcol">
-            <div class="fcol_pad">
-            </div>
-          </div>
-          <div class="fcol">
-            <div class="fcol_pad">				
-            </div>
-          </div>
-          <div class="fcol" style="width: 128px;">
+          <div class="fcol" style="width: 200px;">
             <div class="fcol_pad">
               <h3>Навигация</h3>
                 <div class="footer_nav">
@@ -80,7 +73,7 @@
                 </div>
             </div>
           </div>
-          <div class="fcol" style="width: 200px;">
+          <div class="fcol">
             <div class="fcol_pad">
               <div class="welcomemessage">
                 <a href="<%= root_url %>">Почему-Я-Такая-Дура.РУ</a> <br/>&copy; 2011<br/>
@@ -90,7 +83,7 @@
               </div>
             </div>
           </div>
-          <div class="fcol" style="width: 128px;">
+          <div class="fcol">
             <div class="fcol_pad">
               <div class="footer_nav">
                 <ul>
@@ -121,7 +114,7 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
                 </ul>
               </div>
             </div>
-          </div>        </div>
+          </div>
         <div class="clear"></div>
       </div>
     </div>
@@ -129,9 +122,6 @@ screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
   <!-- catalogs -->
   <div style="text-align: center;"> 
   </div>  
-
-    <%= render :partial => "advert/google_adsence" %>
-
   <div class="clear"></div>
     <hr class="hidden" />
   </div><!--/wrapper -->
