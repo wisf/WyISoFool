@@ -24,7 +24,7 @@
   <%= yield :head %>
 </head>
 
-<body class="home blog" onload="teasetnet_init();">
+<body class="home blog">
 <div id="page" class="fix">
   <div id="wrapper" class="fix">
     <div id="header" class="fix">
@@ -53,7 +53,6 @@
     <div id="container" class="fix ">
       <div id="maincontent">
         <div id="content">
-          <%= render :partial => "advert/teasernet" %>
 	  <% if !params[:notice].blank? %>
           <p id="notice"><%= params[:notice] %></p>
 	  <% end %>
@@ -65,7 +64,7 @@
   <div  id="footer">
     <div class="effect">
       <div class="content">
-          <div class="fcol" style="width: 200px;">
+          <div class="fcol">
             <div class="fcol_pad">
               <h3>Навигация</h3>
                 <div class="footer_nav">
@@ -73,7 +72,7 @@
                 </div>
             </div>
           </div>
-          <div class="fcol">
+          <div class="fcol" style="width: 200px;">
             <div class="fcol_pad">
               <div class="welcomemessage">
                 <a href="<%= root_url %>">Почему-Я-Такая-Дура.РУ</a> <br/>&copy; 2011<br/>

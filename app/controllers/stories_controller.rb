@@ -16,7 +16,8 @@ class StoriesController < ApplicationController
       @conditions = ['content like ? AND aprooved = ?', "%#{params[:s]}%", true]
     end
 
-    @stories = Story.paginate :conditions => @conditions,
+    @stories = Story.paginate :include => :comments,
+                              :conditions => @conditions,
                               :order => @order,
                               :per_page => 10,
                               :page => params[:page]
@@ -205,6 +206,14 @@ class StoriesController < ApplicationController
 		@story = Story.find(params[:id])
 		@comment.story = @story
     @saved = (@comment.save) and ((session["lastcommenttime"].blank?) or (Time.now - session["lastcommenttime"] > 60))
+    if @saved
+      Thread.new do
+        User.all.each do |user|
+          UserMailer.append_comment_notification(@comment, user).deliver
+        end
+      end
+    end
+
     respond_to do |format|
       format.js
       format.html { redirect_to story_url @story }

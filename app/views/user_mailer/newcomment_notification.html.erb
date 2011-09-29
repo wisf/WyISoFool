@@ -1,7 +1,0 @@
-﻿<p>Эй <%= @user.username %>, глянь ка чё там за новый коммент (дата <%= @story.created_at %>)!</p>
-
-<p><b><%= @comment.author %></b> написал:<p>
-
-<p><i><%= @comment.body %></i></p>
-
-<p><%= link_to "К истории", root_url + "stories/" + @comment.story.id.to_s %></p>

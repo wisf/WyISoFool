@@ -7,7 +7,7 @@ class UserMailer < ActionMailer::Base
     mail :to => user.mail, :subject => @story.author + " added new story"
   end
   
-  def newcomment_notification(comment, user)
+  def append_comment_notification(comment, user)
     @comment = comment
     @user = user
     mail :to => user.mail, :subject => @comment.author + " posted new comment"

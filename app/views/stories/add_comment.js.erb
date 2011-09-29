@@ -2,7 +2,7 @@
     <% session["lastcommenttime"] = Time.now %>
     comment_notify("<p id='notice'>Ваш комментарий был успешно добавлен!</p>");
     $("#commentbody").val("Комментарий");
-    $("#comments").prepend("<%= escape_javascript(render :partial => "comments/show", :collection => [@comment]) %>");
+    $("#comments").append("<%= escape_javascript(render :partial => "comments/show", :collection => [@comment]) %>");
     var comment_div = $("#<%= dom_id @comment %>");
     comment_div.hide().slideToggle("slow");
     $("#comment_body").val("");

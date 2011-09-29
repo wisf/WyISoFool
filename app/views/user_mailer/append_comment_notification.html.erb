@@ -1,0 +1,7 @@
+﻿<p>Эй <%= @user.username %>, глянь ка чё там за новый коммент (дата <%= @comment.created_at %>)!</p>
+
+<p><b><%= @comment.author %></b> написал:<p>
+
+<p><i><%= @comment.body %></i></p>
+
+<p><%= link_to "К истории", comment_url(@comment.story) %></p>
