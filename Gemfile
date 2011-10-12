@@ -1,14 +1,14 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.4'
-#gem 'russian'
-gem 'rails-i18n'
+gem 'russian'
+#gem 'rails-i18n'
 gem 'jquery-rails'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-#gem 'mysql2'
-gem 'pg'
+gem 'mysql2', '< 0.3'
+#gem 'pg'
 
 # Use unicorn as the web server
 # gem 'unicorn'
