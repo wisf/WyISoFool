@@ -6,18 +6,15 @@ class StoriesController < ApplicationController
     session[:page] = params[:page]
     @order = 'created_at DESC'
     @conditions = ['content like ?', "%#{params[:s]}%"]
-    if !params[:order].blank?
+    if params[:order].present? and params[:order].eql?("best")
       @order = 'rate DESC'
     end
-    #@story = Story.new
-    if !session[:user].blank? && params[:order].blank?
-      @order = 'aprooved ASC, ' + @order
-    else
+
+    if session[:user].blank?
       @conditions = ['content like ? AND aprooved = ?', "%#{params[:s]}%", true]
     end
 
-    @stories = Story.paginate :include => :comments,
-                              :conditions => @conditions,
+    @stories = Story.paginate :conditions => @conditions,
                               :order => @order,
                               :per_page => 10,
                               :page => params[:page]
@@ -66,10 +63,10 @@ class StoriesController < ApplicationController
   # GET /stories/1
   # GET /stories/1.xml
   def show
-    @story = Story.find(params[:id])
-	@next = (@story.id.eql?(Story.last.id)) ? Story.first.id : Story.where(["id > ?", params[:id]]).limit(1)[0].id
-	@prev = (@story.id.eql?(Story.first.id)) ? Story.last.id : getPrev(@story.id)
-	respond_to do |format|
+    @story = Story.includes(:comments).find(params[:id])
+    @next = (@story.id.eql?(Story.last.id)) ? Story.first.id : Story.where(["id > ?", params[:id]]).limit(1)[0].id
+    @prev = (@story.id.eql?(Story.first.id)) ? Story.last.id : getPrev(@story.id)
+    respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @story }
     end
