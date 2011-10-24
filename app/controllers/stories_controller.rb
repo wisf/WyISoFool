@@ -12,6 +12,10 @@ class StoriesController < ApplicationController
 
     if session[:user].blank?
       @conditions = ['content like ? AND aprooved = ?', "%#{params[:s]}%", true]
+    else
+      if params[:order].blank?
+        @order = "aprooved DESC, " + @order
+      end
     end
 
     @stories = Story.paginate :conditions => @conditions,
@@ -72,17 +76,6 @@ class StoriesController < ApplicationController
     end
   end
 
-  # GET /stories/new
-  # GET /stories/new.xml
-#  def new
-#    @story = Story.new
-
-#    respond_to do |format|
-#      format.html # new.html.erb
-#      format.xml  { render :xml => @story }
-#    end
-#  end
-
   # GET /stories/1/edit
   def edit
     @story = Story.find(params[:id])
@@ -96,7 +89,7 @@ class StoriesController < ApplicationController
   # POST /stories.xml
   def create
     @story = Story.new(params[:story])
-    if @story.content.include? "</a>"
+    if (@story.content.include? "</") or (@story.content.include? "://")
       respond_to do |format|
         format.html { render :text => "<html><head><link href='/stylesheets/theme000.css' media='screen' rel='stylesheet' type='text/css'/><script>window.setTimeout('window.top.hidePopWin()', 10000);</script></head><body><p id='notice'>Пиздуй отсюда нахуй, ёбаный спамер</p><p style='text-align: center;'>Что за хуйню ты мне тут пишешь? А??? СУКА!!!</p><div style='text-align: center;'>" + params[:story][:content] + "</div><div style='width: 300; margin: 0px auto;'><input type='button' value='Скрыть (Автоскрытие в течении 10 секунд)' onclick='window.top.hidePopWin();' class='button'/></div><p style='text-align: center;'><a href='' onclick='window.top.hidePopWin();window.open(\"http://natribu.org/\");'>Пойти нахуй</a><p></body></html>" }
       end
