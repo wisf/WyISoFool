@@ -23,9 +23,9 @@
   <%= csrf_meta_tag %>
   <%= yield :head %>
 </head>
-
-<body class="home blog">
+<body class="home blog" onload="skyscraper_init()">
 <div id="page" class="fix">
+  <%= render "advert/google_skyscraper" %>
   <div id="wrapper" class="fix">
     <div id="header" class="fix">
       <h1 id="blogtitle"><a href="<%= root_url %>"><span class="sheen"></span>Почему я такая <img src="<%= root_url %>logo.png"/ alt="дура" style="margin-bottom:-6px;">?</a></h1>
