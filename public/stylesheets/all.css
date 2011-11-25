@@ -1,0 +1,10 @@
+.rp_list {
+    position:fixed;
+    right:-260px;
+    margin:0;
+    padding:0;
+}
+
+.rp_list ul li{
+    width: 240px;
+}

@@ -98,5 +98,31 @@
     <hr class="hidden" />
   </div><!--/wrapper -->
 </div><!--/page -->
+
+		<div id="rp_list" class="rp_list">
+			<ul>
+				<li>
+                  <div>
+                    <table>
+                      <tr>
+                        <td>
+                          <img src="<%= root_url %>vk.png"/>
+                        </td>
+                        <td>
+                          <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?45"></script>
+                          <!-- VK Widget -->
+                          <span id="vk_groups"></span>
+                          <script type="text/javascript">
+                            VK.Widgets.Group("vk_groups", {mode: 0, width: "200", height: "290"}, 27627369);
+                          </script>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+				</li>
+			</ul>
+		</div>
+
+
 </body>
 </html>
