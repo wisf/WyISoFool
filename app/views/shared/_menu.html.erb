@@ -1,15 +1,26 @@
-<ul>
-  <li class="page_item">
+<ul id="menu-main" class="mnav dropdown  fix">
+  <li>
     <%= link_to 'добавить', { :controller => 'story', :action => 'create' }, :class => "submodal-423-453" %>
   </li>
-  <li class="page_item">
-    <%= link_to 'лучшее', { :controller => 'stories', :order => 'best' } %>
+  <li class="menu-item menu-item-type-post_type menu-item-object-page">
+    <%= link_to 'лучшее', stories_path(:order => :best) %>
+    <ul class="sub-menu">
+      <li class="menu-item menu-item-type-post_type menu-item-object-page;">
+        <%= link_to 'за всё время', stories_path(:order => :best) %>
+      </li>
+      <li class="menu-item menu-item-type-post_type menu-item-object-page;">
+        <%= link_to 'за месяц', stories_path(:order => :best, :period => :month) %>
+      </li>
+      <li class="menu-item menu-item-type-post_type menu-item-object-page;">
+        <%= link_to 'за неделю', stories_path(:order => :best, :period => :week) %>
+      </li>
+    </ul>
   </li>
-  <li class="page_item">
+  <li>
     <%= link_to 'о нас', { :controller => 'about' } %>
   </li>
   <% if !session[:user].blank? %>
-  <li class="page_item">
+  <li>
       <%= render :partial => 'admin/signout'  %>
     </li>
   <% end %>

@@ -1,4 +1,4 @@
-<%= form_for :story do |f| %>
+<%= form_for @story do |f| %>
   <div id="newform">
     <div class="field">
       <%= f.label :author, "Автор" %>
@@ -6,8 +6,8 @@
     </div>
 
     <div class="field">
-      <%= f.label :content, "История" %>
-      <%= f.text_area :content, :cols => 20, :rows => 10, :style => 'border:3px solid #cccccc;' %>
+      <%= f.label :content, "История" %><br/>
+      <%= f.text_area :content, :style => 'width: 500px;' %>
     </div>
 
     <div class="actions">

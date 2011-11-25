@@ -5,23 +5,34 @@ class StoriesController < ApplicationController
   def index
     session[:page] = params[:page]
     @order = 'created_at DESC'
-    @conditions = ['content like ?', "%#{params[:s]}%"]
+    @conditions = ['content like ?', "%#{params[:s]}%"] if params[:s]
     if params[:order].present? and params[:order].eql?("best")
       @order = 'rate DESC'
     end
 
+    dead_time = case params[:period]
+                  when "week"  then Time.now - 1.week
+                  when "month" then Time.now - 1.month
+                end
+
     if session[:user].blank?
-      @conditions = ['content like ? AND aprooved = ?', "%#{params[:s]}%", true]
+      if dead_time
+        @conditions = ['content like ? AND aprooved = ? AND created_at >= ?', "%#{params[:s]}%", true, dead_time]
+      else
+        @conditions = ['content like ? AND aprooved = ?', "%#{params[:s]}%", true]
+      end
     else
       if params[:order].blank?
         @order = "aprooved DESC, " + @order
       end
     end
 
-    @stories = Story.paginate :conditions => @conditions,
-                              :order => @order,
-                              :per_page => 10,
-                              :page => params[:page]
+    @stories = Story.paginate(
+        :conditions => @conditions,
+        :order => @order,
+        :per_page => 8,
+        :page => params[:page]
+    )
 
     respond_to do |format|
       format.html
@@ -46,12 +57,9 @@ class StoriesController < ApplicationController
     @story.rate = @story.rate - 1
     @story.save
     session["story" + params[:id]] = true
-    respond_to do |wants|
-      wants.js {
-        render :update do |page|
-          page.replace_html "story" + params[:id], "<div class='ajaxanswer'>Ваш голос принят</div>"
-        end
-      }
+    respond_to do |format|
+      format.js { render "rate_change" }
+      format.html { redirect_to get_url }
     end
   end
 
@@ -102,16 +110,15 @@ class StoriesController < ApplicationController
 
       respond_to do |format|
         if @story.save
-      		Thread.new do
-      			User.all.each do |user|
-      				UserMailer.createstory_confirmation(@story, user).deliver
-      			end
-      		end
-      		storyPath = root_url + "stories/" + @story.id.to_s
-          format.html { render :text => "<html><head><link href='/stylesheets/theme000.css' media='screen' rel='stylesheet' type='text/css'/><script>window.setTimeout('window.top.hidePopWin()', 10000);</script></head><body><p id='notice'>Ваша история добавлена и появиться на сайте после одобрения модератором</p><div style='text-align: center;'>" + params[:story][:content] + "</div><div style='width: 300; margin: 0px auto;'><input type='button' value='Скрыть (Автоскрытие в течении 10 секунд)' onclick='window.top.hidePopWin();' class='button'/></div><p style='text-align: center;'><a href='' onclick='window.top.hidePopWin();window.open(\"" + storyPath +"\");'>Перейти на страницу истории</a><p></body></html>" }
+#      		Thread.new do
+#      			User.all.each do |user|
+#      				UserMailer.createstory_confirmation(@story, user).deliver
+#      			end
+#      		end
+          format.html { render :text => "<html><head><link href='/stylesheets/theme000.css' media='screen' rel='stylesheet' type='text/css'/><script>window.setTimeout('window.top.hidePopWin()', 10000);</script></head><body><p id='notice'>Ваша история добавлена и появиться на сайте после одобрения модератором</p><div style='text-align: center;'>" + params[:story][:content] + "</div><div style='width: 300; margin: 0px auto;'><input type='button' value='Скрыть (Автоскрытие в течении 10 секунд)' onclick='window.top.hidePopWin();' class='button'/></div><p style='text-align: center;'><a href='' onclick='window.top.hidePopWin();window.open(\"" + story_path(@story) +"\");'>Перейти на страницу истории</a><p></body></html>" }
           format.xml  { render :xml => @story, :status => :created, :location => @story }
         else
-          format.html { render :text => "<html><head><link href='/stylesheets/theme000.css' media='screen' rel='stylesheet' type='text/css'/><script>window.setTimeout('window.top.hidePopWin();', 10000);</script></head><body><div style='height: 150px;'></div><p id='notice'>Вы не рассказали свою историю!</p><div style='width: 300; margin: 0px auto;'><input type='button' value='Скрыть (Автоскрытие в течении 10 секунд)' onclick='window.top.hidePopWin();' class='button'/></div></body></html>" }
+          format.html { render :text => "<html><head><link href='/stylesheets/theme000.css' media='screen' rel='stylesheet' type='text/css'/><script>window.setTimeout('window.top.hidePopWin();', 10000);</script></head><body><div style='height: 150px;'></div><p id='notice'>Ваша история слишком коротка</p><div style='width: 300; margin: 0px auto;'><input type='button' value='Скрыть (Автоскрытие в течении 10 секунд)' onclick='window.top.hidePopWin();' class='button'/></div></body></html>" }
           format.xml  { render :xml => @story.errors, :status => :unprocessable_entity }
         end
       end

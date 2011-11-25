@@ -46,3 +46,13 @@ function comment_notify(message) {
         },2000)
     });
 }
+
+$(document).ready(function () {
+    $("ul.dropdown > li").hover(function(){
+        $(this).addClass("menuhover");
+        $('ul:first',this).fadeIn("fast");
+    }, function(){
+        $(this).removeClass("menuhover");
+        $('ul:first',this).fadeOut("fast");
+    });
+});

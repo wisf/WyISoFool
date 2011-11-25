@@ -141,7 +141,7 @@ a, #blogtitle a:hover, .postdata a:hover,h2.posttitle a:hover, .tags a:hover, .c
 	#blogtitle a{color: #000;}
 	#blogtitle a:hover{text-decoration: none;}
 	
-	#blogdescription { 
+	#blogdescription {
 		float: left;
 		margin-top: 19px; 	/* description distance from top of screen */
 		margin-left: 90px;
@@ -245,9 +245,10 @@ color: #555;
 .widget_twitter .twitter {background:none;padding-left: 0px;}
 #sidebar .twitter {	margin:1em 0;}
 
+
 /* MAIN NAVIGATION */
 	#nav {
-		font-size: 13px;	
+		font-size: 13px;
 		background: transparent url(nav-bg00.png) no-repeat 0px -1px;
 		margin-bottom: 16px;
 	}
@@ -260,33 +261,32 @@ color: #555;
 		padding: 0px;
 		float: left;
 	}
-	
+
 	#nav ul#menu-main-nav, #nav ul.mnav, #nav ul#menu-main {
 		float:left;
-		width:650px;
 		}
-	
+
 	#nav ul li{
 		font-weight: bold;
 		margin:0;
 		padding: 0px;
 		float: left;
-		
-		background: url(navdivid.png) no-repeat right top;
+
+		background: url(navdivider.png) no-repeat right top;
 	}
-	
+
 	#wrapper #nav ul.homebutton li a.home, #wrapper #nav ul.homebutton li a.home:hover{
 			background-color: transparent;
 			background-position:  21px 5px;
 			background-repeat: no-repeat;
 			text-indent: -300em;
 			width: 25px;
-			border-left: none;	
+			border-left: none;
 			position:relative;
 			z-index: 10;
-			padding: 9px 22px 9px 20px;	
+			padding: 9px 22px 9px 20px;
 		}
-		
+
 	#nav ul.homebutton li a.home:hover, #nav ul.homebutton li a.home:active{
 		cursor: pointer;
 		margin:0;
@@ -299,7 +299,7 @@ color: #555;
 		color: #000;
 		display: block;
 	}
-	
+
 
 	#nav ul li a small{display: none;}
 
@@ -309,30 +309,30 @@ color: #555;
 		text-shadow: #000 0 -1px 0px;
 		padding: 9px 21px 9px 21px;
 	}
-	
+
 	#nav .current_page_item a, #nav .current_page_item a:hover, #nav .current_page_ancestor a, #nav .current_page_ancestor a:hover, #nav .current-menu-item a{
-		text-decoration: none;	
-		background: #2a2a2a url(nav-spri.png) repeat-x 0 -72px;
+		text-decoration: none;
+		background: #2a2a2a url(nav-sprite-default.png) repeat-x 0 -72px;
 		color: #fff;
 	}
 	 #nav li a:hover{
 		color: #fff;
-		background: #b1b1b1 url(nav-spri.png) repeat-x 0 0px;
+		background: #b1b1b1 url(nav-sprite-default.png) repeat-x 0 0px;
 	}
 	 #nav li a:active{
 		color: #fff;
-		background: #2a2a2a url(nav-spri.png) repeat-x 0 -36px;
+		background: #2a2a2a url(nav-sprite-default.png) repeat-x 0 -36px;
 	}
-	
+
 	/* Drop Down*/
 	#nav li{position:relative;}
-	
-	#nav ul ul {display: none;} 
+
+	#nav ul ul {display: none;}
 
 
 /* SUB NAVIGATION (ONLY ON PAGES) */
-	#subnav { 
-		margin-top: 8px; 
+	#subnav {
+		margin-top: 8px;
 		font-size: 12px;
 	}
 
@@ -370,14 +370,23 @@ color: #555;
 		font-size:.9em;
 	}
 	#sidebar #grandchildnav a {display:block;padding: 5px 10px;border: 1px solid transparent;margin-top:-1px;}
-	#sidebar #grandchildnav .current_page_item a, 
-	#sidebar #grandchildnav a:hover, 
+	#sidebar #grandchildnav .current_page_item a,
+	#sidebar #grandchildnav a:hover,
 	#sidebar #grandchildnav .current_page_item ul li a:hover{
 		text-decoration:none;background:#f7f7f7;border: 1px solid #eee;
 	}
 	#sidebar #grandchildnav ul li ul li a{display:block;padding: 5px 23px; color:#555;}
 	#sidebar #grandchildnav .current_page_item ul li a{background:transparent; color:#555;border: 1px solid transparent;}
-	
+
+
+
+
+
+
+
+
+
+
 /* CONTENT */
 #content { clear: both;	overflow: hidden; }
 
@@ -1023,6 +1032,150 @@ margin-right:23px;
 .pad_small{padding: 8px;}
 .pad_big {padding: 15px 20px;}
 
+
+/*  LEVEL ONE */
+#nav ul.dropdown {z-index:1000;}
+#nav ul ul li{background: none;}
+
+/* Main Menu Element On Hover */
+ #nav ul.dropdown li.menuhover a{
+	color: #fff;
+	background: #444;
+	margin-left: -1px;
+	margin-right: 1px;
+	text-shadow: none;
+
+	border: 1px solid transparent;
+	border-bottom: none;
+	padding: 8px 20px 9px 20px;
+
+}
+
+/* Default Padding If Not Main */
+#nav ul.dropdown li.menuhover ul li a, #nav ul.dropdown li ul li a{
+	padding: 10px 13px;
+	margin:0;
+	color: #fff;
+	background: none;
+	text-shadow: none;
+	border: none;
+}
+
+
+#nav ul.dropdown li.menuhover ul a:hover, #nav ul.dropdown li.current_page_item ul a:hover{
+	background: #000;
+	margin:0;
+	text-shadow: none;
+	padding: 10px 13px;
+}
+
+/* STYLING FIRST DROP DOWN */
+
+	#nav ul.dropdown ul{
+		width: 220px;
+		display:none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		z-index: 200;
+		zoom: 1;
+		border: 1px solid #222;
+		border-top: none;
+
+	    background: #444 url(bg_dropdown.png) repeat-x left bottom;
+		text-shadow: none;
+		padding-bottom: 5px;
+		-moz-border-radius-bottomleft: 5px;
+		-moz-border-radius-bottomright: 5px;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		-webkit-border-bottom-left-radius: 5px;
+		-webkit-border-bottom-right-radius: 5px;
+		-khtml-border-bottom-left-radius: 5px;
+		-khtml-border-bottom-right-radius: 5px;
+	}
+	#nav ul.dropdown ul li{
+		z-index:300;
+		position:relative;
+		font-weight: normal;
+		color: #fff;
+		border:none;
+		float: none;
+		margin: 0;
+		padding:0;
+	}
+
+/* Default Link Styling */
+#nav ul.dropdown ul li a{
+	text-shadow: none;
+	border:none;
+	margin:0;
+	background: none;
+}
+
+
+/* Correct back sub pages */
+#nav ul.dropdown li.menuhover ul li.current_page_item ul li a,
+#nav ul.dropdown ul li.current_page_item ul li a,
+#nav ul.dropdown li.menuhover ul li.current_page_ancestor ul li a,
+#nav ul.dropdown ul li.current_page_ancestor ul li a{
+	background:#444;
+}
+
+#nav ul.dropdown ul li a:hover,
+#nav ul.dropdown li.menuhover ul li a:hover,
+#nav ul.dropdown ul li.current_page_item a,
+#nav ul.dropdown li.menuhover ul li.current_page_item a,
+#nav ul.dropdown ul li.current_page_ancestor a,
+#nav ul.dropdown li.menuhover ul li.current_page_ancestor a,
+#nav ul.dropdown li.menuhover ul li.current_page_item ul li a:hover,
+#nav ul.dropdown li.menuhover ul li.current_page_ancestor ul li a:hover,
+#nav ul.dropdown li.menuhover ul li ul li.current_page_item a{
+	color: #fff;
+	border:none;
+	text-shadow: none;
+	background: #000;
+
+}
+
+/*  LEVEL THREE */
+#nav ul.dropdown ul ul 			{ left: 100%; top: 0; }
+#nav ul.dropdown li:hover > ul 	{ display: block; }
+
+.delete_comment_link {
+  float: left;  margin: -30px 5px 5px -55px;  position: relative;
+}
+
+.post_nav {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    clear: both;
+}
+
+.actions, .field {
+    text-align: center;
+}
+
+.social_at_footer {
+    margin-right: 35px;
+}
+
+.tag {
+    text-align: center;
+}
+
+.tag_block {
+    margin-left: -2px;
+    font-size: 20px;
+}
+
+.links_title {
+    text-align: center;
+}
+
+
 .aligncenter {
 	display: block;
 	margin-left: auto;
@@ -1113,3 +1266,4 @@ margin-right:23px;
 #commentbodyerror{
         color: red;
 }
+
