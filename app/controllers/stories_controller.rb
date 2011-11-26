@@ -1,5 +1,7 @@
 # encoding: UTF-8
+
 class StoriesController < ApplicationController
+  before_filter :require_login, :only => [ :edit, :update, :destroy, :aproove, :hide ]
   # GET /stories
   # GET /stories.xml
   def index
@@ -144,54 +146,34 @@ class StoriesController < ApplicationController
   # DELETE /stories/1
   # DELETE /stories/1.xml
   def destroy
-    if !session[:user].blank?
-      @story = Story.find(params[:id])
-      @story.destroy
+    @story = Story.find(params[:id])
+    @story.destroy
 
-      respond_to do |format|
-        format.html { redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была успешно запушена в космос)' }
-        format.xml  { head :ok }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to  :controller => 'stories', :notice => 'Уважаемый, так называемый хакер, идите нахуй!' }
-        format.xml  { head :ok }
-      end
+    respond_to do |format|
+      format.html { redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была успешно запушена в космос)' }
+      format.xml  { head :ok }
     end
   end
 
   def aproove
-    if !session[:user].blank?
-      @story = Story.find(params[:id])
-      @story.aprooved = true
-      @story.save
+    @story = Story.find(params[:id])
+    @story.aprooved = true
+    @story.save
 
-      respond_to do |format|
-        format.html { redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была успешна опубликована' }
-        format.xml  { head :ok }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to  :controller => 'stories', :notice => 'Уважаемый, так называемый хакер, идите нахуй!' }
-        format.xml  { head :ok }
-      end
+    respond_to do |format|
+      format.html { redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была успешна опубликована' }
+      format.xml  { head :ok }
     end
   end
-  def hide
-    if !session[:user].blank?
-      @story = Story.find(params[:id])
-      @story.aprooved = false
-      @story.save
 
-      respond_to do |format|
-        format.html { redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была скрыта' }
-        format.xml  { head :ok }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to  :controller => 'stories', :notice => 'Уважаемый, так называемый хакер, идите нахуй!' }
-        format.xml  { head :ok }
-      end
+  def hide
+    @story = Story.find(params[:id])
+    @story.aprooved = false
+    @story.save
+
+    respond_to do |format|
+      format.html { redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была скрыта' }
+      format.xml  { head :ok }
     end
   end
 
@@ -214,6 +196,14 @@ class StoriesController < ApplicationController
     respond_to do |format|
       format.js
       format.html { redirect_to story_url @story }
+    end
+  end
+
+  private
+
+  def require_login
+    if session[:user].blank?
+      redirect_to :controller => :admin, :notice => "Вы должны быть зарегистрированы для выполнения данного действия"
     end
   end
 end
