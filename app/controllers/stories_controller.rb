@@ -94,11 +94,19 @@ class StoriesController < ApplicationController
 
   def any_free
     if User.authenticate(params[:username], params[:password])
-      k = Story.find_by_vk_label(false)
-      k.vk_label = true
-      k.save
-      render :text => k.content
+      @story = Story.find_by_vk_label(false)
     end
+    render 'stories/any_free', :layout => false
+  end
+
+  def vk_post
+    if User.authenticate(params[:username], params[:password])
+      @story = Story.find params[:id]
+      p @story
+      @story.vk_label = true
+      @story.save
+    end
+    render :text => "Ok"
   end
 
   def find

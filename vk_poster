@@ -1,0 +1,41 @@
+#!/home/smit/.rvm/bin/ruby
+# encoding: UTF-8
+require "watir-webdriver"
+require "mechanize"
+
+mech = Mechanize.new
+response = mech.get("http://pochemu-ya-takaya-dura.ru/any_free?username=Smit&password=RDX5KbPnch")
+link = response.links.first
+url = link.href
+id = link.to_s
+content = response.labels.first.to_s
+p "story: " + url
+
+browser = Watir::Browser.new :firefox
+browser.goto "http://vkontakte.ru/wall-27627369"
+
+if browser.button(:id => "quick_login_button").exist?
+  p "loggining"
+  browser.text_field(:id => 'quick_email').set("375256399494")
+  browser.text_field(:id => 'quick_pass').set("1йф\"ЦЫ3ув")
+  browser.button(:id => "quick_login_button").click
+ 
+  browser.wait_until do
+    browser.text_field(:id => "post_field").exists?
+  end
+end
+
+sleep 3.0
+browser.text_field(:id => 'post_field').set(url + content)
+sleep 3.0
+
+if (browser.image(:src => "http://pochemu-ya-takaya-dura.ru/logo.png").exist?)
+  browser.execute_script("wall.sendPost()", "javascript")
+  mech.get("http://pochemu-ya-takaya-dura.ru/vk_post/" + id + "?username=Smit&password=RDX5KbPnch")
+  sleep 3.0
+  p "ok"
+else
+  p "fuck"
+end
+
+browser.close
