@@ -91,6 +91,13 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
   end
 
+
+  def any_free
+    p "Hi man"
+    k = Story.find_by_vk_label(false)
+    render :text => k.to_s
+  end
+
   def find
     redirect_to :controller => 'stories' , :s => params[:s], :notice => 'Результаты поиска по запросу ' + params[:s]
   end
