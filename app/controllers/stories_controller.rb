@@ -93,9 +93,12 @@ class StoriesController < ApplicationController
 
 
   def any_free
-    p "Hi man"
-    k = Story.find_by_vk_label(false)
-    render :text => k.to_s
+    if User.authenticate(params[:username], params[:password])
+      k = Story.find_by_vk_label(false)
+      k.vk_label = true
+      k.save
+      render :text => k.content
+    end
   end
 
   def find
@@ -106,6 +109,7 @@ class StoriesController < ApplicationController
   # POST /stories.xml
   def create
     @story = Story.new(params[:story])
+    @story.vk_label = false
     if (@story.content.include? "</") or (@story.content.include? "://")
       respond_to do |format|
         format.html { render :text => "<html><head><link href='/stylesheets/theme000.css' media='screen' rel='stylesheet' type='text/css'/><script>window.setTimeout('window.top.hidePopWin()', 10000);</script></head><body><p id='notice'>Пиздуй отсюда нахуй, ёбаный спамер</p><p style='text-align: center;'>Что за хуйню ты мне тут пишешь? А??? СУКА!!!</p><div style='text-align: center;'>" + params[:story][:content] + "</div><div style='width: 300; margin: 0px auto;'><input type='button' value='Скрыть (Автоскрытие в течении 10 секунд)' onclick='window.top.hidePopWin();' class='button'/></div><p style='text-align: center;'><a href='' onclick='window.top.hidePopWin();window.open(\"http://natribu.org/\");'>Пойти нахуй</a><p></body></html>" }
