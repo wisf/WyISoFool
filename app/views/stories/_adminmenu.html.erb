@@ -1,11 +1,7 @@
   <% if !session[:user].blank? %>
   <div class="adminmenu">
-    <%= link_to 'Удалить', @story, :method => :delete %> |
+    <%= link_to 'Удалить', @story, :method => :delete, :confirm => "Точно удалить?" %> |
     <%= link_to 'Изменить', edit_story_path(@story) %> |
-    <% if !@story.aprooved %>
-      <%= link_to 'Опубликовать', { :action => "aproove", :id => @story.id } %>
-    <% else %>
-      <%= link_to 'Скрыть', { :action => "hide", :id => @story.id } %>
-    <% end %>
+    <%= link_to @story.aprooved ? "Скрыть" : "Опубликовать", toggle_story_visiblity_path(@story) %>
   </div>
   <% end %>

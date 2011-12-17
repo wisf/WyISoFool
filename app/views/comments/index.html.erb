@@ -1,25 +1,6 @@
-<h1>Listing comments</h1>
+<% content_for :content do %>
 
-<table>
-  <tr>
-    <th>Author</th>
-    <th>Body</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+    <%= render :partial => "show", :collection => @comments %>
 
-<% @comments.each do |comment| %>
-  <tr>
-    <td><%= comment.author %></td>
-    <td><%= comment.body %></td>
-    <td><%= link_to 'Show', comment %></td>
-    <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-    <td><%= link_to 'Destroy', comment, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<%= will_paginate @comments %>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Comment', new_comment_path %>

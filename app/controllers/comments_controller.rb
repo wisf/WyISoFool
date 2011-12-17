@@ -1,9 +1,14 @@
 # encoding: UTF-8
 class CommentsController < ApplicationController
+  before_filter :admin_auth, :except => [:new, :create]
   # GET /comments
   # GET /comments.xml
   def index
-    @comments = Comment.all
+    @comments =  Comment.paginate(
+        :order => "created_at desc",
+        :page => params[:page],
+        :per_page => 50
+    )
 
     respond_to do |format|
       format.html # index.html.erb
@@ -73,19 +78,10 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   # DELETE /comments/1.xml
   def destroy
-    if !session[:user].blank?
-      @comment = Comment.find(params[:id])
-      @comment.destroy
-
-      respond_to do |format|
-        format.html { redirect_to  :controller => 'stories', :action => 'show', :id => params[:storyid], :notice => "Комментарий №" + params[:id] + "был успешно похерен!" }
-        format.xml  { head :ok }
-      end
+    if Comment.find(params[:id]).destroy
+      redirect_to  :back, :notice => "Комментарий №" + params[:id] + "был успешно похерен!"
     else
-      respond_to do |format|
-        format.html { redirect_to  :controller => 'stories', :action => 'show', :id => params[:storyid], :notice => "Уважаемый, так называемый хакер, идите нахуй!" }
-        format.xml  { head :ok }
-      end
+      redirect_to  :back, :notice => "Что то пошло не так, комментарий не удалён!"
     end
   end
 end

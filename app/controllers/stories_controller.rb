@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 class StoriesController < ApplicationController
-  before_filter :require_login, :only => [ :edit, :update, :destroy, :aproove, :hide ]
+  before_filter :admin_auth, :only => [ :edit, :update, :destroy, :toggle_visiblity ]
   # GET /stories
   # GET /stories.xml
   def index
@@ -65,20 +65,11 @@ class StoriesController < ApplicationController
     end
   end
 
-  def getPrev id
-	i = id.to_i
-	loop do
-		i = i - 1
-		break if (Story.where(["id = ?", i.to_s]).size > 0)
-	end
-	i.to_s
-  end
-  
   # GET /stories/1
   # GET /stories/1.xml
   def show
     @story = Story.includes(:comments).find(params[:id])
-    @next = (@story.id.eql?(Story.last.id)) ? Story.first.id : Story.where(["id > ?", params[:id]]).limit(1)[0].id
+    @next = (@story.id.eql?(Story.last.id)) ? Story.first.id : Story.where(["id > ?", params[:id]]).limit(1).first.id
     @prev = (@story.id.eql?(Story.first.id)) ? Story.last.id : getPrev(@story.id)
     respond_to do |format|
       format.html # show.html.erb
@@ -101,10 +92,7 @@ class StoriesController < ApplicationController
 
   def vk_post
     if User.authenticate(params[:username], params[:password])
-      @story = Story.find params[:id]
-      p @story
-      @story.vk_label = true
-      @story.save
+      Story.find(params[:id]).update_attribute(:vk_label, true)
     end
     render :text => "Ok"
   end
@@ -149,51 +137,23 @@ class StoriesController < ApplicationController
   # PUT /stories/1
   # PUT /stories/1.xml
   def update
-    @story = Story.find(params[:id])
-
-    respond_to do |format|
-      if @story.update_attributes(params[:story])
-        format.html { redirect_to(@story, :notice => 'Story was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @story.errors, :status => :unprocessable_entity }
-      end
+    if (story = Story.find(params[:id])).update_attributes(params[:story])
+        redirect_to story, :notice => "Story was successfully updated."
+    else
+        render :edit, :notice => "История не была обновлена"
     end
   end
 
   # DELETE /stories/1
   # DELETE /stories/1.xml
   def destroy
-    @story = Story.find(params[:id])
-    @story.destroy
-
-    respond_to do |format|
-      format.html { redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была успешно запушена в космос)' }
-      format.xml  { head :ok }
-    end
+    Story.find(params[:id]).destroy
+    redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была успешно запушена в космос)'
   end
 
-  def aproove
-    @story = Story.find(params[:id])
-    @story.aprooved = true
-    @story.save
-
-    respond_to do |format|
-      format.html { redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была успешна опубликована' }
-      format.xml  { head :ok }
-    end
-  end
-
-  def hide
-    @story = Story.find(params[:id])
-    @story.aprooved = false
-    @story.save
-
-    respond_to do |format|
-      format.html { redirect_to  :controller => 'stories', :notice => 'История №' + params[:id].to_s + ' была скрыта' }
-      format.xml  { head :ok }
-    end
+  def toggle_visiblity
+    Story.find(params[:id]).toggle!(:aprooved)
+    redirect_to  :controller => 'stories', :notice => "Видимость истории №#{params[:id]} была успешно изменена"
   end
 
   def add_comment
@@ -204,25 +164,28 @@ class StoriesController < ApplicationController
 		@story = Story.find(params[:id])
 		@comment.story = @story
     @saved = (@comment.save) and ((session["lastcommenttime"].blank?) or (Time.now - session["lastcommenttime"] > 60))
-    if @saved
-      Thread.new do
-        User.all.each do |user|
-          UserMailer.append_comment_notification(@comment, user).deliver
-        end
-      end
-    end
+#    if @saved
+#      Thread.new do
+#        User.all.each do |user|
+#          UserMailer.append_comment_notification(@comment, user).deliver
+#        end
+#      end
+#    end
 
     respond_to do |format|
       format.js
-      format.html { redirect_to story_url @story }
+      format.html { redirect_to @story }
     end
   end
 
   private
 
-  def require_login
-    if session[:user].blank?
-      redirect_to :controller => :admin, :notice => "Вы должны быть зарегистрированы для выполнения данного действия"
-    end
+  def getPrev id
+	  i = id.to_i
+	  loop do
+  		i = i - 1
+  		break if (Story.where(["id = ?", i.to_s]).size > 0)
+  	end
+  	i.to_s
   end
 end

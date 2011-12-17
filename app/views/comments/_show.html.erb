@@ -1,13 +1,16 @@
 <%= div_for show, :class => :hentry do %>
   <div>
     <div style="float: left">
-      <%= h(show.author) %> <%= distance_of_time_in_words_to_now(show.created_at) %> назад написал:
+      <%= h(show.author) %> <%= distance_of_time_in_words_to_now(show.created_at) %> назад
+      <%= link_to_if (controller_name == "comments"), "написал", show.story %>
+      :
     </div>
     <% if !session[:user].blank? %>
       <div class="adminmenu" style="float: right">
-        <%= link_to 'Удалить комментарий', root_url + "comments/destroy/" + show.id.to_s + "?storyid=" + @story.id.to_s %>
+        <%= link_to 'Удалить комментарий', show, :method => :delete, :confirm => "Вы уверены?" %>
       </div>
     <% end %>
+
   </div>
   <blockquote>
     <%= show.body %>

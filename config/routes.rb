@@ -10,8 +10,8 @@ WhyISoFool::Application.routes.draw do
 
 #  get "about/advert"
 
-#  get "admin/signin"
-
+  get "admin/index", :as => :admin
+  get "stories/:id/toggle_visiblity" => "stories#toggle_visiblity", :as => :toggle_story_visiblity
 #  get "admin/signout"
 
 
