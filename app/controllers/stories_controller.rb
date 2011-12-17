@@ -32,7 +32,7 @@ class StoriesController < ApplicationController
     @stories = Story.paginate(
         :conditions => @conditions,
         :order => @order,
-        :per_page => 8,
+        :per_page => 9,
         :page => params[:page]
     )
 
